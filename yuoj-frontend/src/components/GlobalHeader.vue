@@ -1,27 +1,41 @@
 <script setup lang="ts">
 import { routes } from "@/router/routes";
 import { useRouter } from "vue-router";
-import { ref } from "vue";
+import { computed, ref } from "vue";
 import { useStore } from "vuex";
+import checkAccess from "@/access/checkAccess";
+import ACCESS_ENUM from "@/access/accessEnum";
 
 const router = useRouter();
+const store = useStore();
+const loginUser = store.state.user.loginUser;
+// 展示在菜单的路由
+const visibleRoutes = computed(() => {
+  return routes.filter((item, index) => {
+    if (item.meta?.hideInMenu) {
+      return false;
+    }
+    // todo 根据权限控制菜单显示隐藏
+    if (!checkAccess(store.state.user.loginUser, item.meta?.access as string)) {
+      return false;
+    }
+    return true;
+  });
+});
 const doMenuClick = (key: string) => {
   router.push({
     path: key,
   });
 };
 
-const store = useStore();
 console.log(store.state.user.loginUser);
 
-/*
 setTimeout(() => {
   store.dispatch("user/getLoginUser", {
-    userName: "香香",
-    role: "admin",
+    userName: "香香管理员",
+    userRole: ACCESS_ENUM.ADMIN,
   });
 }, 3000);
-*/
 
 // 默认主页
 const selectedKeys = ref(["/"]);
@@ -33,7 +47,7 @@ router.afterEach((to, from, failure) => {
 </script>
 
 <template>
-  <a-row id="globalHeader" style="margin-bottom: 16px" align="center">
+  <a-row id="globalHeader" align="center" :wrap="false">
     <a-col flex="auto">
       <a-menu
         mode="horizontal"
@@ -48,12 +62,12 @@ router.afterEach((to, from, failure) => {
           <div class="title-bar">
             <img
               class="logo"
-              src="https://img2.baidu.com/it/u=2477548932,1618898030&fm=253&app=138&size=w931&n=0&f=JPEG&fmt=auto?sec=1707843600&t=b11389919f4146d601ff0d96aadfda0f"
+              src="https://img0.baidu.com/it/u=1249277386,3219917190&fm=253&app=138&size=w931&n=0&f=JPEG&fmt=auto?sec=1707930000&t=53a69bd3d22cc9fe00aa4bb2afb8f7e6"
             />
             <div class="title">香香 OJ</div>
           </div>
         </a-menu-item>
-        <a-menu-item v-for="item in routes" :key="item.path"
+        <a-menu-item v-for="item in visibleRoutes" :key="item.path"
           >{{ item.name }}
         </a-menu-item>
       </a-menu>
