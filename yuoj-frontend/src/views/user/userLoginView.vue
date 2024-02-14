@@ -14,12 +14,15 @@
       <a-input-password v-model="form.userPassword" placeholder="请输入密码" />
     </a-form-item>
     <a-form-item>
-      <a-button
-        html-type="submit"
-        style="width: 256px; text-align: center"
-        type="primary"
-        >登录
-      </a-button>
+      <a-space>
+        <a-button
+          html-type="submit"
+          style="width: 256px; text-align: center"
+          type="primary"
+          >登录
+        </a-button>
+        <a-link href="/user/register">没有账号？去注册</a-link>
+      </a-space>
     </a-form-item>
   </a-form>
 </template>
