@@ -67,7 +67,7 @@ public class QuestionServiceImpl extends ServiceImpl<QuestionMapper, Question>
         Integer submitNum = question.getSubmitNum();
         Integer acceptedNum = question.getAcceptedNum();
         String judgeCase = question.getJudgeCase();
-        String judgeConfig = question.getJudgeConfig();
+        String judgeConfig = String.valueOf(question.getJudgeConfig());
         Integer thumbNum = question.getThumbNum();
         Integer favourNum = question.getFavourNum();
         Long userId = question.getUserId();

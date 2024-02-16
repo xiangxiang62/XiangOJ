@@ -4,6 +4,8 @@ import com.baomidou.mybatisplus.annotation.*;
 
 import java.io.Serializable;
 import java.util.Date;
+
+import com.xiangxiang.yuoj.model.dto.question.JudgeConfig;
 import lombok.Data;
 
 /**

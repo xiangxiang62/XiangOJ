@@ -46,7 +46,7 @@ const handleSubmit = async () => {
   const res = await UserControllerService.userLoginUsingPost(form);
   if (res.code === 0) {
     await store.dispatch("user/getLoginUser");
-    alert("登录成功，" + JSON.stringify(res.data));
+    alert("登录成功，欢迎你 " + JSON.stringify(res.data.id));
     router.push({
       path: "/",
       replace: true,
